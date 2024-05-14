@@ -1,13 +1,11 @@
 import torch
 import numpy as numpy
 import cv2
-from time import time
 from ultralytics import YOLO
 
 
 class ObjectDetection:
-
-    def _init_(self, video_path, yolo_path):
+    def __init__(self, video_path, yolo_path):
         self.capture_index =  video_path
         self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
         print('Using Device: ', self.device)
@@ -38,7 +36,7 @@ class ObjectDetection:
         
         return result.plot(), xyxys, confidences, class_ids
     
-    def _call_(self):
+    def __call__(self):
 
         cap = cv2.VideoCapture(self.capture_index)
         assert cap.isOpened()
@@ -64,9 +62,9 @@ class ObjectDetection:
             break
 
 
-video_path = './videos/01.mp4'  # Video path
-yolo_model_path = "./model/best.pt"  # Path del modelo
 
+video_path = "./videos/01.mp4"  # Video path
+yolo_model_path = "./model/best.pt"  # Path del modelo
 # Creo el objeto con el path del video y el del modelo.
 detector = ObjectDetection(video_path,yolo_model_path)
 detector()
